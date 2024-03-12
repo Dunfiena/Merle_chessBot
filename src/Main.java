@@ -13,10 +13,10 @@ public class Main {
         Scanner in = new Scanner(System.in);
         switch (in.nextLine().toLowerCase()){
             case "white":
-                startGame("black");
+                startGame("white");
                 break;
             case "black":
-                startGame("white");
+                startGame("black");
                 break;
             case "fate":
                 String fate = coinToss();
@@ -47,76 +47,102 @@ public class Main {
         String playerColor = color;
         boolean checkmate=false;
         int turn = 1;
-        String move[];
-        boolean playerTurn;
-        int playercol = 1;
-        int aicolor = 2;
+        int j=0;
+        Move move;
+        ArrayList<Move> moves = new ArrayList<>();
+        boolean playerTurn = false;
+        int playercol = 2;
+        int aicolor = 3;
 
 
         //THIS is the body of the game.
         while(!checkmate) {
-
-            if (Objects.equals(playerColor, "white") && turn % 2 != 0) {
+            if (Objects.equals(playerColor, "white") && turn%2 == 1) {
                 move = playermove();
+                moves.add(move);
                 playerTurn = true;
                 playercol=1;
             } else if (Objects.equals(playerColor, "black") && turn % 2 == 0) {
                 move = playermove();
+                moves.add(move);
                 playerTurn = true;
                 playercol=2;
             } else {
                 move = MerleMove();
+                System.out.println("I play "+ move.getFile()  + "" + move.getRank());
+                moves.add(move);
                 playerTurn = false;
-                aicolor -=playercol;
+                if (turn == 1) {
+                    aicolor -= playercol;
+                }
             }
 
             if (playerTurn && playercol == 1){
                 for (Piece p: white){
-                    if (String.valueOf(p.getRank()).equals(move[0]) && String.valueOf(p.getFile()).equals(move[1])){
-                        p.setFile(move[1]);
-                        p.setRank(Integer.parseInt(move[0]));
+                    if (p.getRank() == moves.get(moves.size()-1).getRank() && String.valueOf(p.getFile()).equals(moves.get(moves.size()-1).getFile())){
+                        p.setFile(moves.get(moves.size()-1).getFile());
+                        p.setRank(moves.get(moves.size()-1).getRank());
                     }
                 }
             } else if (playerTurn) {
                 for (Piece p: black){
-                    if (String.valueOf(p.getRank()).equals(move[0]) && String.valueOf(p.getFile()).equals(move[1])){
-                        p.setFile(move[1]);
-                        p.setRank(Integer.parseInt(move[0]));
+                    if (p.getRank() == moves.get(moves.size()-1).getRank() && String.valueOf(p.getFile()).equals(moves.get(moves.size()-1).getFile())){
+                        p.setFile(moves.get(moves.size()-1).getFile());
+                        p.setRank(moves.get(moves.size()-1).getRank());
                     }
                 }
             } else {
                 if (aicolor == 1){
                     for (Piece p: black){
-                        if (String.valueOf(p.getRank()).equals(move[0]) && String.valueOf(p.getFile()).equals(move[1])){
-                            p.setFile(move[1]);
-                            p.setRank(Integer.parseInt(move[0]));
+                        if (p.getRank() == moves.get(moves.size()-1).getRank() && String.valueOf(p.getFile()).equals(moves.get(moves.size()-1).getFile())){
+                            p.setFile(moves.get(moves.size()-1).getFile());
+                            p.setRank(moves.get(moves.size()-1).getRank());
                         }
                     }
                 }else{
                     for (Piece p: white){
-                        if (String.valueOf(p.getRank()).equals(move[0]) && String.valueOf(p.getFile()).equals(move[1])){
-                            p.setFile(move[1]);
-                            p.setRank(Integer.parseInt(move[0]));
+                        if (p.getRank() == moves.get(moves.size()-1).getRank() && String.valueOf(p.getFile()).equals(moves.get(moves.size()-1).getFile())){
+                            p.setFile(moves.get(moves.size()-1).getFile());
+                            p.setRank(moves.get(moves.size()-1).getRank());
                         }
                     }
                 }
             }
             turn++;
+
+            if (turn > 2 && turn % 2 == 0){
+                j++;
+                System.out.print(j+")");
+                for (int i=0; i < moves.size();) {
+                    i++;
+                    System.out.print("   " + moves.get(moves.size()-i).getFile() + "-----" + moves.get(moves.size()-i).getRank());
+                    if (i==2){
+                        break;
+                    }
+                }
+            }
+            System.out.print("\n");
         }
     }
 
-    private static String[] MerleMove() {
-        String ret[] = null;
-        return ret;
+    private boolean checkMove(Move move) {
+
+        return true;
     }
 
-    private static String[] playermove() {
+    private static Move MerleMove() {
+        String file = "a";
+        int rank = 4;
+        return new Move(file,rank);
+    }
+
+    private static Move playermove() {
         Scanner charin = new Scanner(System.in);
         Scanner intIn = new Scanner(System.in);
         System.out.println("Play your move (rank then file)");
         String file = charin.next();
         int rank = intIn.nextInt();
-        return new String[]{String.valueOf(rank), file};
+        return new Move(file,rank);
     }
 
 

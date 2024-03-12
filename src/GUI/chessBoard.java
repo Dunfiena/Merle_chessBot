@@ -13,8 +13,9 @@ public class chessBoard extends JPanel {
     String[] usedRanks = {"1","2","3","4","5","6","7","8"};
     Icon blank = new ImageIcon("src/GUI/Assets/blank.png");
     boolean validmove;
-    public chessBoard(ArrayList<Piece> white, ArrayList<Piece> black, String playerColor){
 
+
+    public chessBoard(ArrayList<Piece> white, ArrayList<Piece> black, String playerColor){
         Icon BBishop_uS_R = new ImageIcon("src/GUI/Assets/B_bis_us_r.png");
         Icon WBishop_uS_R = new ImageIcon("src/GUI/Assets/W_bis_us_r.png");
         Icon BKnight_uS_R = new ImageIcon("src/GUI/Assets/B_Kni_us_r.png");
@@ -202,11 +203,13 @@ public class chessBoard extends JPanel {
     }
 
     private boolean checkMove(int tile, int icon, String playerColor, ArrayList<Piece> white, ArrayList<Piece> black) {
-        float rank1 = ((float) tile / 8);
+        System.out.println(tile);
+        float rank1 = ((float) (tile)/8);
         int rank = (int) rank1;
-        int file = tile - (rank * 8);
+        System.out.println(rank);
+        int file = tile - (rank*8);
         boolean valid;
-        System.out.println(rank + " " + file + " " + usedFile[file]);
+        System.out.println(usedRanks[rank] + " " + usedFile[file]);
         if (Objects.equals(playerColor, "white")) {
             switch (icon) {
                 case 0:

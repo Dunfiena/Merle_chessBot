@@ -16,10 +16,10 @@ public class Bishop extends Piece{
         int indexRankNew = 0, indexRankOld = 0, indexFileNew = 0, indexFileOld = 0;
         //nested for loop to check bishop position-> if on a1, a3, a5 OR b2, b4, b6, c1, c3 etc
         //it can make a certain amount of valid moves based on those sqares.
-        for (String s : usedFile) {
+        for (String userfile : usedFile) {
             for (int usedrank : usedRanks) {
                 //Dark square bishop moves
-                if (Objects.equals(this.getFile(), s) && this.getRank() == usedrank) {
+                if (Objects.equals(this.getFile(), userfile) && this.getRank() == usedrank) {
                     //Check files odd ranks
                     if (Objects.equals(this.getFile(), "a") || Objects.equals(this.getFile(), "c") ||
                             Objects.equals(this.getFile(), "e") || Objects.equals(this.getFile(), "g")) {
